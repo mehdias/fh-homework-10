@@ -6,12 +6,13 @@ module API
     def index
       # implement your code here
       players = Player.all
-      render json: {status: 'Success', message:'Loaded players', data:players}, status: 200
+      render json: players, status: 200
     end
 
     # GET /api/players/1
     def show
-      # implement your code here
+      player = Player.find_by id: params[:id]
+      render json: player, status: 200
     end
 
     # POST /api/players
