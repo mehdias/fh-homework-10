@@ -21,21 +21,6 @@ module API
 
         expect(response.status).to eq(200)
       end
-
-     xit 'retrieves properly sets success' do
-        Player.create! valid_attributes
-
-        get api_players_url,
-            as: :json
-
-        results = JSON.parse(response.body, symbolize_names: true)
-        results.each do | hash |
-          if hash[:success]
-            expect(hash[:success]).to eq(true)
-            break
-          end
-        end
-      end
     end
 
     describe 'GET /players/:id' do
@@ -48,16 +33,6 @@ module API
 
           expect(response.status).to eq(200)
         end
-
-        xit 'properly sets the success key' do
-          player = Player.create! valid_attributes
-
-          get api_player_url(player),
-              as: :json
-
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(true)
-        end
       end
 
       context 'with invalid params' do
@@ -68,16 +43,6 @@ module API
               as: :json
 
           expect(response.status).to eq(422)
-        end
-
-        it 'retrieves the requested player' do
-          player_id = -1
-
-          get api_player_url(player_id),
-              as: :json
-
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(false)
         end
       end
     end
@@ -93,17 +58,6 @@ module API
 
           expect(response.status).to eq(201)
         end
-
-        it 'properly sets the success key' do
-          expect {
-            post api_players_url,
-                params: {player: valid_attributes},
-                as: :json
-          }.to change(Player, :count).by(1)
-
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(true)
-        end
       end
 
       context 'with invalid params' do
@@ -115,17 +69,6 @@ module API
           }.to change(Player, :count).by(0)
 
           expect(response.status).to eq(422)
-        end
-
-        it 'properly sets the success key' do
-          expect {
-            post api_players_url,
-                params: {player: invalid_attributes},
-                as: :json
-          }.to change(Player, :count).by(0)
-
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(false)
         end
       end
     end
@@ -145,17 +88,6 @@ module API
           # expect(response.status).to eq(204)
           expect(response.status).to eq(200)
         end
-
-        it 'properly sets the success key' do
-          player = Player.create! valid_attributes
-
-          put api_player_url(player),
-              params: {player: new_attributes},
-              as: :json
-
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(true)
-        end
       end
 
       context 'with invalid params' do
@@ -167,17 +99,6 @@ module API
               as: :json
 
           expect(response.status).to eq(422)
-        end
-
-        it 'properly sets the success key' do
-          player = Player.create! valid_attributes
-
-          patch api_player_url(player),
-              params: {player: invalid_attributes},
-              as: :json
-
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(false)
         end
       end
     end
@@ -194,18 +115,6 @@ module API
           # expect(response.status).to eq(204)
           expect(response.status).to eq(200)
         end
-
-        it 'properly sets success key' do
-          player = Player.create! valid_attributes
-
-          expect {
-            delete api_player_url(player),
-            as: :json
-          }.to change(Player, :count).by(-1)
-          
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(true)
-        end
       end
 
       context 'with invalid params' do
@@ -218,18 +127,6 @@ module API
           }.to change(Player, :count).by(0)
 
           expect(response.status).to eq(422)
-        end
-
-        it 'properly sets success key' do
-          player_id = -1
-
-          expect {
-            delete api_player_url(player_id),
-            as: :json
-          }.to change(Player, :count).by(0)
-          
-          result = JSON.parse(response.body, symbolize_names: true)
-          expect(result[:success]).to eq(false)
         end
       end
     end

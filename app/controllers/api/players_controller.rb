@@ -5,14 +5,12 @@ module API
     # GET /api/players
     def index
       # implement your code here
-      players = Player.all
+      @players = Player.all
       render json: players, status: 200
     end
 
     # GET /api/players/1
     def show
-      player = Player.find_by id: params[:id]
-      render json: player, status: 200
     end
 
     # POST /api/players
