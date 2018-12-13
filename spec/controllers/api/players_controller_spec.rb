@@ -112,7 +112,6 @@ module API
             delete api_player_url(player),
             as: :json
           }.to change(Player, :count).by(-1)
-          # expect(response.status).to eq(204)
           expect(response.status).to eq(200)
         end
       end
