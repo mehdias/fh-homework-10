@@ -11,7 +11,6 @@ module API
 
     # GET /api/players/1
     def show
-      @player = Player.find_by_id(params[:id])
       if @player.present?
         render json: @player, status: 200
       else
@@ -22,9 +21,8 @@ module API
     # POST /api/players
     def create
       # implement your code here
-      player = Player.create(player_params)
-      if player.valid?
-        player.save
+      player = Player.new(player_params)
+      if player.save
         render json: player, status: 201
       else
         render plain: 'unprocessible entity', status: 422
@@ -33,8 +31,6 @@ module API
 
     # PATCH/PUT /api/players/1
     def update
-      # implement your code here
-      @player = Player.find_by_id(params[:id])
       if @player.update_attributes(player_params)
         render json: @player, status: 200
       else 
@@ -45,8 +41,6 @@ module API
 
     # DELETE /api/players/1
     def destroy
-      # implement your code here
-      @player = Player.find_by_id(params[:id])
       if @player.blank?
         render plain: 'unprocessable_entity', status: 422
       else
